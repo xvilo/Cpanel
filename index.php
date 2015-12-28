@@ -1,12 +1,4 @@
 <?php require('header.php'); ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
-
-<html>
-<head>
-    <title></title>
-</head>
-
-<body>
     <div id="main-content">
         <div id="guts">
             <div class="leftwrapper">
@@ -49,9 +41,8 @@
                             <p>Selecteer hier rechts een factuur om deze te bekijken, te downloaden of opnieuw per e-mail te versturen.</p>
                         </div>
                     </div>
+                    
                 </div>
             </div>
         </div>
     </div><?php require('footer.php'); ?>
-</body>
-</html>

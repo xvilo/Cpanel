@@ -13,7 +13,8 @@ body{
     margin-right: auto;
     margin-left: auto;
     padding-left: 7px;
-    width: 1154px;
+    max-width: 1154px;
+    min-width: 960px;
     padding-right: 7px;
 }
 
@@ -56,6 +57,7 @@ ul.mainnav li a:hover, ul.mainnav li a.current{border-bottom: 3px solid #1EA1DE;
 .element{
 	background: white;
     padding: 20px;
+    margin-bottom: 2em;
 }
 
 .element.nopadding{
@@ -89,16 +91,11 @@ p:last-child{
 	color: green;
 }
 
-thead{
-	background:#00A1DA;
-	color:white;
-}
+thead{background:#00A1DA;color:white;}
+.table-cp th{padding: 1em;}
+span.small {font-size: 0.8em;}
+#invoice-table td{border-bottom: none;padding: 0px;}
+#invoice-table p{margin: 0px;}
+#invoice-table hr{ margin-top: 1rem;margin-bottom: 1.0rem;}
 
-.table-cp th{
-	padding: 1em;
-}
-
-span.small {
-    font-size: 0.8em;
-}
 

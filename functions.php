@@ -64,6 +64,18 @@ function getInvoices($userid){
 	return $sth->fetchAll();
 }
 
+function getFullInvoiceData($invoicenum=''){
+	global $dbh;
+	if($invoicenum == ''){
+		$sth = $dbh->prepare("SELECT * FROM invoice_invoices;");
+	}else{
+		$sth = $dbh->prepare("SELECT * FROM invoice_invoices WHERE invoice_number=:invoice_num;");
+	}
+	$sth->bindParam(':invoice_num', $invoicenum, PDO::PARAM_INT);
+	$sth->execute();
+	return $sth->fetch();
+}
+
 function getInvoiceStatus($status){
 	if($status == 0){
 		return "&nbsp;";
