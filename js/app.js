@@ -28,14 +28,12 @@ $(function() {
                             $pageWrap.animate({
                                 height: baseHeight + $mainContent.height() + "px"
                             });
+                            calcLeftWrapper(); /* fn call */
                         });
                         $("ul.mainnav a").removeClass("current");
                         $("ul.mainnav a[href$='"+href+"']").addClass("current");
                     });
                 });
-                console.log('begin function');
-			    calcLeftWrapper();
-			    console.log('end function');
     }
     
     $(window).bind('popstate', function(){
@@ -48,24 +46,26 @@ $(function() {
     
 });
 
-$( document ).ready(calcLeftWrapper());
-
-$(window).resize(function(){
-	calcLeftWrapper();
+$(document).ready(function() {
+    calcLeftWrapper();
+});
+$(window).resize(function() {
+    calcLeftWrapper();
 });
 
-function calcLeftWrapper(){
-	var divWidth = $('.original-width').width(); 
-	var divPosit = $('.original-width').offset();
-	var vph      = $(window).height();
-	var element  = '.leftwrapper';
-	var height   = vph - divPosit.top - 15;
-	console.log(divWidth+'px en '+divPosit.left+'px');
-	$(element).css({
-	    'width': divWidth,
-	    'left': divPosit.left,
-	    'top': divPosit.top,
-	    'height': height,
-	    'display': 'block',
-	});
+function calcLeftWrapper() {
+    var $original = $('.original-width');
+    var $divWidth = $original.width();
+    var $divPosit = $original.offset();
+    var $vph = $(window).height();
+    var $element = $('.leftwrapper');
+    var $height = $vph - $divPosit.top - 15;
+    $element.css({
+        'width': $divWidth,
+        'left': $divPosit.left,
+        'top': $divPosit.top,
+        'height': $height,
+    });
+    $element.delay(500).fadeIn(200, function() {
+	    });
 }
