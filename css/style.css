@@ -58,6 +58,10 @@ ul.mainnav li a:hover, ul.mainnav li a.current{border-bottom: 3px solid #1EA1DE;
     padding: 20px;
 }
 
+.element.nopadding{
+	padding: 0px;
+}
+
 .login-box{
 	width: 360px;
 	margin: 0 auto;
@@ -73,3 +77,28 @@ ul.mainnav li a:hover, ul.mainnav li a.current{border-bottom: 3px solid #1EA1DE;
 p:last-child{
 	margin-bottom: 0px;
 }
+
+#invoices-table{
+	width: 100%;
+}
+
+#invoices-table a{text-decoration: none;}
+#invoices-table .invoice.total{color: black;}
+
+.fa-check.payed{
+	color: green;
+}
+
+thead{
+	background:#00A1DA;
+	color:white;
+}
+
+.table-cp th{
+	padding: 1em;
+}
+
+span.small {
+    font-size: 0.8em;
+}
+

@@ -4,8 +4,12 @@
 	$dbuser   = "thisisd3_cp";
 	$dbpass   = "ooqQe6Sm";
 	$domain   = "http://cp.thisisd3.com";
-	
-	$dbh = new PDO("mysql:host=localhost;dbname={$database}", $dbuser, $dbpass);
+	try {
+		$dbh = new PDO("mysql:host=localhost;dbname={$database}", $dbuser, $dbpass);
+	} catch (PDOException $e) {
+	    print "Error: " . $e->getMessage() . "<br/>";
+	    die();
+	}
 	
 session_start();
 
@@ -18,22 +22,23 @@ function checkPassword($password, $hash){
 }
 
 function checkLogin($username, $password){
-	global $dbh;
-	$usernameQuoted = $dbh->quote($username);
-	$passwordQuoted = $dbh->quote($password);
-	doQuery("SELECT * FROM invoice_users WHERE user_login={$usernameQuoted};");
+	doLoginQuery($username, $password);
 }
 
 function addUser(){
-	$hash = password_hash("Verti0Ndoos", PASSWORD_BCRYPT, array("cost" => 10));
+	$hash = password_hash("password", PASSWORD_BCRYPT, array("cost" => 10));
 }
 
-function doQuery($query){
+function doLoginQuery($username, $password){
 	global $dbh;
 	global $loginerror;
 	global $domain;
 	$check = false;
-	foreach($dbh->query("$query") as $row) {
+	$sth = $dbh->prepare("SELECT * FROM invoice_users WHERE user_login=:username;");
+	$sth->bindParam(':username', $username, PDO::PARAM_STR);
+	$sth->execute();
+		
+	foreach($sth as $row) {
     	$check = checkPassword($_POST['login_pass'], $row['user_pass']);
     	$info = $row;
 	}
@@ -46,6 +51,24 @@ function doQuery($query){
 		$_SESSION['user_num']   = $info['usercustnum'];
 		$_SESSION['user_id']    = $info['ID'];
 		header("Location: {$domain}{$_GET['red']}");
+	}
+
+}
+
+function getInvoices($userid){
+	global $dbh;
+	$check = false;
+	$sth = $dbh->prepare("SELECT invoice_id, invoice_status, invoice_number, invoice_duedate, invoice_total FROM invoice_invoices WHERE invoice_recipient=:userid;");
+	$sth->bindParam(':userid', $_SESSION['user_id'], PDO::PARAM_STR);
+	$sth->execute();
+	return $sth->fetchAll();
+}
+
+function getInvoiceStatus($status){
+	if($status == 0){
+		return "&nbsp;";
+	}elseif($status == 1){
+		return '<i class="fa fa-check payed"></i>';
 	}
 }
 

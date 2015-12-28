@@ -18,6 +18,13 @@ $(function() {
         loadContent(_link);
         return false;
     });
+    
+    $("#invoices-table").delegate("a", "click", function() {
+        _link = $(this).attr("href");
+        history.pushState(null, null, _link);
+        loadContent(_link);
+        return false;
+    });
 
     function loadContent(href){
         $mainContent
