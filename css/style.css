@@ -57,3 +57,19 @@ ul.mainnav li a:hover, ul.mainnav li a.current{border-bottom: 3px solid #1EA1DE;
 	background: white;
     padding: 20px;
 }
+
+.login-box{
+	width: 360px;
+	margin: 0 auto;
+}
+
+.login-box form{margin: 0px;}
+
+.notice{padding: 0.5em 2em; margin-bottom: 20px;}
+.notice p{margin: 0px;}
+.notice span{font-weight: 700;}
+.error{background: rgba(255,0,0,0.1); border-bottom: 3px solid rgba(255,0,0,1);}
+
+p:last-child{
+	margin-bottom: 0px;
+}

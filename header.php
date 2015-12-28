@@ -1,3 +1,7 @@
+<?php
+include('functions.php');
+
+?>
 <!DOCTYPE html>
 
 <html lang="nl">
@@ -8,8 +12,8 @@
 
     <title>Control Panel | D3 - Creative Agency</title>
     <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="css/normalize.css" type="text/css">
-    <link rel="stylesheet" href="css/skeleton.css" type="text/css">
+    <link rel="stylesheet" href="/css/normalize.css" type="text/css">
+    <link rel="stylesheet" href="/css/skeleton.css" type="text/css">
     <link href="/css/style.css" rel="stylesheet" type="text/css">
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
@@ -43,21 +47,21 @@
 		                	<image xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/d3-full-logo.svg" src="/img/d3-full-logo.png" width="268" height="48" alt="TransIP"></image>
 		                	</svg<span class="sr-only">TransIP</span></a>
                     <ul class="mainnav">
-                        <li><a href="/">Controlepaneel</a></li>
-                        <li><a href="/domein-hosting.php">Domein & Hosting</a></li>
-                        <li><a href="/contact.php">Contact</a></li>
-                        <li><a href="#">{USER}</a>
+                        <li><a href="/">Mijn facturen</a></li>
+                       <?php if (isset($_SESSION['user'])){ ?>
+                        <li><a href="/user/"><?php echo $_SESSION['user'] ?></a>
                             <ul style="display: none;">
                                 <li>
                                     <div class="navbar-login">
-                                        <p><strong>{USER FULL NAME}</strong></p>
-                                        <p class="small">{USER EMAIL}</p>
-                                        <p><a class="button button-primary" href="#">Mijn Account</a></p>
-                                        <p><a class="button button-primary" href="#">Uitloggen</a></p>
+                                        <p><strong><?php echo $_SESSION['user'] ?></strong></p>
+                                        <p class="small"><?php echo $_SESSION['user_email'] ?></p>
+                                        <p><a class="button button-primary" href="/user/">Mijn Account</a></p>
+                                        <p><a class="button button-primary" href="/logout.php">Uitloggen</a></p>
                                     </div>
                                 </li>
                             </ul>
                         </li>
+                        <?php } ?>
                     </ul>
                 </div>
             </nav>
