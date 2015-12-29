@@ -99,4 +99,8 @@ span.small {font-size: 0.8em;}
 #invoice-table p{margin: 0px;}
 #invoice-table hr{ margin-top: 1rem;margin-bottom: 1.0rem;}
 
-
+.form-group label{     display: inline-block;
+    font-weight: 600;
+    width: 30%;
+    text-align: right;
+    margin-right: 20px;}

@@ -37,7 +37,7 @@
                         <div class="element">
                             <h1>Mijn Facturen</h1>
 
-                            <p>Selecteer hier rechts een factuur om deze te bekijken, te downloaden of opnieuw per e-mail te versturen.</p>
+                            <p>Selecteer hier rechts een factuur om deze te bekijken<!-- , te downloaden of opnieuw per e-mail te versturen-->.</p>
                         </div>
                         
                         <?php 

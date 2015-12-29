@@ -37,7 +37,7 @@
                         <div class="element">
                             <h1>Mijn Facturen</h1>
 
-                            <p>Selecteer hier rechts een factuur om deze te bekijken, te downloaden of opnieuw per e-mail te versturen.</p>
+                            <p>Selecteer hier rechts een factuur om deze te bekijken<!-- , te downloaden of opnieuw per e-mail te versturen-->.</p>
                         </div>
                         
                         <?php 
@@ -48,7 +48,8 @@
 								}
 							$invoice_adress = unserialize($invoiceData['invoice_adress']);
 							$productsData = unserialize($invoiceData['invoice_products']);
-							//die(var_dump($productsData));
+							//die(var_dump($invoiceData));
+							if($invoiceData['invoice_recipient'] == $_SESSION['user_id']){
 						?>
 							
                         <div class="element">
@@ -156,7 +157,17 @@
 								</td>
 							</tr>
 						</table>
-                    </div>
+					</div>
+					<?php
+						}else{
+							?>
+							<div class="element">
+								<h1>Error!</h1>
+								<p>403 no access.</p>
+							</div>
+							<?php
+						}
+						?>
                     </div>
                 </div>
             </div>
