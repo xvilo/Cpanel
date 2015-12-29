@@ -45,7 +45,7 @@ ul.mainnav li a:hover, ul.mainnav li a.current{border-bottom: 3px solid #1EA1DE;
 	position: fixed;
 	width: 350px;
 	padding-bottom: 15px;
-	overflow: scroll;
+	overflow: hidden;
 	display: none;
 	z-index: 99;
 }
@@ -61,7 +61,8 @@ ul.mainnav li a:hover, ul.mainnav li a.current{border-bottom: 3px solid #1EA1DE;
 }
 
 .element.nopadding{
-	padding: 0px;
+	padding: 0px!important;
+	margin: 0px!important;
 }
 
 .login-box{

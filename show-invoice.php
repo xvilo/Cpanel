@@ -17,9 +17,9 @@
 	                        $totalAmount = number_format($invoices['invoice_total'], 2, ',', '.');
 	                        $invoiceStatus = getInvoiceStatus($invoices['invoice_status']);
 	                        echo "<tr>";
-							echo "<th><a class='invoice status' href='/show-invoice.php?no={$invoices['invoice_number']}'>{$invoiceStatus}</a></th>";
-							echo "<th><a class='invoice number' href='/show-invoice.php?no={$invoices['invoice_number']}'>{$invoices['invoice_number']}</a></th>";
-							echo "<th><a class='invoice total' href='/show-invoice.php?no={$invoices['invoice_number']}'>&euro; {$totalAmount}</a></th>";
+							echo "<th><a class='invoice status' href='/invoice/{$invoices['invoice_number']}'>{$invoiceStatus}</a></th>";
+							echo "<th><a class='invoice number' href='/invoice/{$invoices['invoice_number']}'>{$invoices['invoice_number']}</a></th>";
+							echo "<th><a class='invoice total' href='/invoice/{$invoices['invoice_number']}'>&euro; {$totalAmount}</a></th>";
                            	echo '<tr>';
                         }
                         ?>
@@ -48,6 +48,8 @@
 								}
 							$invoice_adress = unserialize($invoiceData['invoice_adress']);
 							$productsData = unserialize($invoiceData['invoice_products']);
+							//die(var_dump($invoiceData));
+							if($invoiceData['invoice_recipient'] == $_SESSION['user_id']){
 						?>
 							
                         <div class="element">
@@ -107,38 +109,29 @@
 							<tr style="clear:both;">
 								<td></td>
 							</tr>
+							<?php foreach($productsData as $product){
+								?>
+							<!-- Begin product -->
 							<tr style="width: 700px; float: left; margin-top:0px;">
 								<td style="width:363px; float:left; display:block;border: none;">
-									Domein Registratie 1jr (Shebutter.com)
+									<?php echo $product['name'] ?>
 								</td>
 								<td style="width: 125px; float:left; display:block;border: none;">
-									&euro; 11,99
+									&euro; <?php echo number_format($product['priceOne'], 2, ',', '.') ?>
 								</td>
 								<td style="width: 115px; float:left; display:block;border: none;">
-									1
+									<?php echo $product['amount'] ?>
 								</td>
 								<td style="width: 97px; float:left; display:block;border: none;">
-									&euro; 11,99
+									&euro; <?php echo number_format($product['priceTot'], 2, ',', '.') ?>
 								</td>
 								<td style="clear: both; height: 0px; display: block;">&nbsp;</td>
 								<td style="display:block;"></td>
 							</tr>
-							<tr style="width: 700px; float: left; margin-top:0px;">
-								<td style="width:363px; float:left; display:block;border: none;">
-									Domein Registratie 1jr (hennajagua.com)
-								</td>
-								<td style="width: 125px; float:left; display:block;border: none;">
-									&euro; 11,99
-								</td>
-								<td style="width: 115px; float:left; display:block;border: none;">
-									1
-								</td>
-								<td style="width: 97px; float:left; display:block;border: none;">
-									&euro; 11,99
-								</td>
-								<td style="clear: both; height: 0px; display: block;">&nbsp;</td>
-								<td style="display:block;"></td>
-							</tr>
+							<!-- end product -->
+							<?php	
+							}
+							?>
 							<tr>
 								<td style="clear: both; height: 0px; display: block;">&nbsp;</td>
 								<td style="display:block; margin-top:60px; margin-bottom: 15px;">
@@ -164,7 +157,17 @@
 								</td>
 							</tr>
 						</table>
-                    </div>
+					</div>
+					<?php
+						}else{
+							?>
+							<div class="element">
+								<h1>Error!</h1>
+								<p>403 no access.</p>
+							</div>
+							<?php
+						}
+						?>
                     </div>
                 </div>
             </div>
