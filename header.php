@@ -48,9 +48,9 @@ include('functions.php');
 		                	<image xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/d3-full-logo.svg" src="/img/d3-full-logo.png" width="268" height="48" alt="TransIP"></image>
 		                	</svg<span class="sr-only">TransIP</span></a>
                     <ul class="mainnav">
-                        <li><a href="/">Mijn facturen</a></li>
+                        <li><a href="/invoice/">Mijn facturen</a></li>
                        <?php if (isset($_SESSION['user'])){ ?>
-                        <li><a href="/user/"><?php echo $_SESSION['user'] ?></a>
+                        <li><a href='/user/<?php echo $_SESSION['user_num'] ?>'><?php echo $_SESSION['user'] ?></a>
                             <ul style="display: none;">
                                 <li>
                                     <div class="navbar-login">
