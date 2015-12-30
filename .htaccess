@@ -7,7 +7,11 @@ RewriteCond %{SCRIPT_FILENAME} !-f
 RewriteRule ^invoice/(\d+)*$ ./show-invoice.php?no=$1
 RewriteRule ^user/(\d+)*$ ./user-data.php?id=$1
 RewriteRule ^logout/(\d+)*$ ./logout.php?id=$1
-RewriteRule ^login/(\d+)*$ ./login.php?id=$1
+RewriteRule ^login/(\d+)*$ ./login.php?red=$1
+
+Options +FollowSymLinks
+RewriteEngine On
  
 #admin
-RewriteRule ^create/(.*)$ ./create.php?query=$1
+RewriteRule ^admin/create/(.*)$ ./admin/create.php?query=$1
+RewriteRule ^admin/users/(.*)$ ./admin/users.php?id=$1
