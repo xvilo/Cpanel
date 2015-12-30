@@ -69,3 +69,5 @@ function calcLeftWrapper() {
     $element.delay(500).fadeIn(200, function() {
 	    });
 }
+
+jQuery("#userdetails-phone").intlTelInput();

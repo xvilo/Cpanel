@@ -36,18 +36,19 @@ function updateUser($userInfo){
 	foreach($userInfo['meta_key'] as $key => $value){
 		$query  =  $dbh->query("SELECT meta_value FROM invoice_usermeta WHERE meta_key='$key' AND user_id='{$userInfo['id']}'");
 	    $q      =  $query->fetch(PDO::FETCH_OBJ);
-	    if(isset($q->meta_value)){
+	    if(isset($q->meta_value) && $value != ""){
 	        $sth = $dbh->prepare("UPDATE invoice_usermeta SET meta_value=:meta_value WHERE meta_key=:meta_key AND user_id=:userid;");
 	        $sth->bindParam(':meta_key', $key, PDO::PARAM_INT);
 			$sth->bindParam(':meta_value', $value, PDO::PARAM_INT);
 			$sth->bindParam(':userid', $userInfo['id'], PDO::PARAM_INT);
 			$sth->execute();
-	    }else{
-		    $sth = $dbh->prepare("INSERT INTO meta_value(user_id, ,meta_key, meta_value) VALUES(:userid, :meta_value, :meta_key)");
+	    }elseif(!isset($q->meta_value) && $value != ""){
+		    $sth = $dbh->prepare("INSERT INTO invoice_usermeta (user_id,meta_key, meta_value) VALUES(:userid, :meta_key, :meta_value)");
 	        $sth->bindParam(':meta_key', $key, PDO::PARAM_INT);
 			$sth->bindParam(':meta_value', $value, PDO::PARAM_INT);
 			$sth->bindParam(':userid', $userInfo['id'], PDO::PARAM_INT);
 			$sth->execute();
+	    }else{
 	    }
     }
 }
@@ -55,7 +56,7 @@ function updateUser($userInfo){
 function getUserData($custnum){
 	global $dbh;
 	$sth = $dbh->prepare("
-	SELECT u.*, m1.meta_value, m2.meta_value, m3.meta_value, m4.meta_value, m5.meta_value, m6.meta_value
+	SELECT u.*, m1.meta_value, m2.meta_value, m3.meta_value, m4.meta_value, m5.meta_value, m6.meta_value, m7.meta_value
 	FROM invoice_users u
 	LEFT OUTER JOIN invoice_usermeta m1
 	    on u.id = m1.user_id 
@@ -75,6 +76,9 @@ function getUserData($custnum){
 	LEFT OUTER JOIN invoice_usermeta m6
 	    on u.id = m6.user_id 
 	    and m6.meta_key='full_name'
+	LEFT OUTER JOIN invoice_usermeta m7
+	    on u.id = m7.user_id 
+	    and m7.meta_key='company_name'
 	WHERE usercustnum=:customer");
 	$sth->bindParam(':customer', $custnum, PDO::PARAM_INT);
 	$sth->execute();

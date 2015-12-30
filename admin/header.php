@@ -1,6 +1,5 @@
 <?php
 include('functions.php');
-
 ?>
 <!DOCTYPE html>
 
@@ -36,6 +35,7 @@ include('functions.php');
     <meta name="msapplication-TileImage" content="/mstile-144x144.png">
     <meta name="theme-color" content="#ffffff">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/intlTelInput.css">
 </head>
 
 <body>
@@ -43,7 +43,7 @@ include('functions.php');
         <header class="mainhead">
             <nav class="top">
                 <div class="container">
-	                <a class="navbar-brand brand-long" href="/">
+	                <a class="navbar-brand brand-long" href="/admin">
 		                <svg width="207" height="48">
 		                	<image xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/d3-full-logo.svg" src="/img/d3-full-logo.png" width="268" height="48" alt="TransIP"></image>
 		                	</svg<span class="sr-only">TransIP</span></a>
