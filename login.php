@@ -1,6 +1,22 @@
 <?php require('header.php'); ?>
 			<div id="main-content">
 				<div id="guts">
+					<?php if(isset($_POST['reset_user'])){
+						?>
+						<div class="login-box">
+						<div class="element">
+							<h5>Wachtwoord vergeten</h5>
+							<form method="post">
+					              <label for="tokenInput">Stap 2: Vul je token in en nieuwe wachtwoord</label>
+					              <input class="u-full-width" type="text" name="reset_token" placeholder="Token" id="tokenInput">
+					              <input class="u-full-width" type="password" name="reset_pass" placeholder="Wachtwoord" id="resetPassInput">
+						          <input class="button-primary" type="submit" value="Submit" name="loginforgotresetsubmit"><br>
+        					</form>
+						</div>
+					</div>
+					<?php
+						}elseif(!isset($_GET['type'])){	
+					?>
 					<div class="login-box">
 						<div class="element">
 							<form method="post">
@@ -19,13 +35,26 @@
 					              <input class="u-full-width" type="password" name="login_pass" placeholder="Wachtwoord" id="exampleEmailInput">
 					              <label for="Captcha">Bent u een robot?</label>
 					              <div class="g-recaptcha" data-sitekey="6Lc5JRQTAAAAAFc5UvrC-MTKiVYHNhQWIq7OzuDC"></div>
-						          <input class="button-primary" type="submit" value="Submit" name="loginsubmit">
+						          <input class="button-primary" type="submit" value="Submit" name="loginsubmit"><br>
+						          <a href="/login/?type=forgot">Wachtwoord vergeten</a>
         					</form>
 						</div>
 					</div>
-				</div>
-			</div>
-<?php require('footer.php'); ?>v>
+					<?php }elseif($_GET['type']=='forgot'){
+						?>
+						<div class="login-box">
+						<div class="element">
+							<h5>Wachtwoord vergeten</h5>
+							<form method="post">
+					              <label for="usernameInput">Stap 1: Vul uw gebruikersnaam in</label>
+					              <input class="u-full-width" type="text" name="reset_user" placeholder="Gebruikersnaam" id="usernameInput">
+						          <input class="button-primary" type="submit" value="Submit" name="loginforgotsubmit"><br>
+        					</form>
+						</div>
+					</div>
+						<?php
+					}
+					?>
 				</div>
 			</div>
 <?php require('footer.php'); ?>
