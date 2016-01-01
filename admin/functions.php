@@ -85,6 +85,31 @@ function getUserData($custnum){
 	return $sth->fetch();
 }
 
+function getInvoices($status=''){
+	global $dbh;
+	$check = false;
+	if($status != ''){
+		$sth = $dbh->prepare("SELECT * FROM invoice_invoices WHERE invoice_status=:status");
+	}else{
+		$sth = $dbh->prepare("SELECT * FROM invoice_invoices");
+	}
+	$sth->bindParam(':status', $status, PDO::PARAM_INT);
+	$sth->execute();
+	return $sth->fetchAll();
+}
+
+function getFullInvoiceData($invoicenum=''){
+	global $dbh;
+	if($invoicenum == ''){
+		$sth = $dbh->prepare("SELECT * FROM invoice_invoices;");
+	}else{
+		$sth = $dbh->prepare("SELECT * FROM invoice_invoices WHERE invoice_number=:invoice_num;");
+	}
+	$sth->bindParam(':invoice_num', $invoicenum, PDO::PARAM_INT);
+	$sth->execute();
+	return $sth->fetch();
+}
+
 if (!isset($_SESSION['user']) && $_SERVER['SCRIPT_NAME'] != '/login.php'){
 	header("Location: {$domain}/login/?red=".urlencode($_SERVER['REQUEST_URI']));
 }
@@ -95,4 +120,12 @@ if ($_SESSION['user_priv'] != '0'){
 
 if (isset($_POST['userdatasubmit'])) {
 	updateUser($_POST);
+}
+
+function getInvoiceStatus($status){
+	if($status == 0){
+		return "&nbsp;";
+	}elseif($status == 1){
+		return '<i class="fa fa-check payed"></i>';
+	}
 }

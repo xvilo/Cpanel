@@ -17,10 +17,15 @@
 					              <input class="u-full-width" type="text" name="login_user" placeholder="Gebruikersnaam" id="exampleEmailInput">
 					              <label for="exampleEmailInput">Wachtwoord</label>
 					              <input class="u-full-width" type="password" name="login_pass" placeholder="Wachtwoord" id="exampleEmailInput">
+					              <label for="Captcha">Bent u een robot?</label>
+					              <div class="g-recaptcha" data-sitekey="6Lc5JRQTAAAAAFc5UvrC-MTKiVYHNhQWIq7OzuDC"></div>
 						          <input class="button-primary" type="submit" value="Submit" name="loginsubmit">
         					</form>
 						</div>
 					</div>
+				</div>
+			</div>
+<?php require('footer.php'); ?>v>
 				</div>
 			</div>
 <?php require('footer.php'); ?>

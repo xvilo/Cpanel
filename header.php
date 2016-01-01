@@ -36,6 +36,7 @@ include('functions.php');
     <meta name="msapplication-TileImage" content="/mstile-144x144.png">
     <meta name="theme-color" content="#ffffff">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
 
 <body>
