@@ -1,9 +1,6 @@
 <?php
+	include_once('../config.php')
 	
-	$database = "thisisd3_cp";
-	$dbuser   = "thisisd3_cp";
-	$dbpass   = "ooqQe6Sm";
-	$domain   = "http://cp.thisisd3.com";
 	try {
 		$dbh = new PDO("mysql:host=localhost;dbname={$database}", $dbuser, $dbpass);
 	} catch (PDOException $e) {
@@ -78,7 +75,7 @@ function getUserData($custnum){
 	    and m6.meta_key='full_name'
 	LEFT OUTER JOIN invoice_usermeta m7
 	    on u.id = m7.user_id 
-	    and m7.meta_key='company_name'
+	    and m7.meta_key='user_company'
 	WHERE usercustnum=:customer");
 	$sth->bindParam(':customer', $custnum, PDO::PARAM_INT);
 	$sth->execute();

@@ -52,14 +52,15 @@ include('functions.php');
                         <li><a href="/admin/users/">Klanten</a></li>
                         <li><a href="/admin/invoices/">Facturen</a></li>
                        <?php if (isset($_SESSION['user'])){ ?>
-                        <li><a href='/user/<?php echo $_SESSION['user_num'] ?>'><?php echo $_SESSION['user'] ?></a>
-                            <ul style="display: none;">
+                        <li class="has-sub"><a href='/user/<?php echo $_SESSION['user_num'] ?>'><?php echo $_SESSION['user'] ?></a>
+                            <ul>
                                 <li>
                                     <div class="navbar-login">
-                                        <p><strong><?php echo $_SESSION['user'] ?></strong></p>
+                                        <p>Klantnummer: <strong><?php echo $_SESSION['user_num'] ?></strong></p>
                                         <p class="small"><?php echo $_SESSION['user_email'] ?></p>
+                                        <Br>
                                         <p><a class="button button-primary" href="/user/">Mijn Account</a></p>
-                                        <p><a class="button button-primary" href="/logout.php">Uitloggen</a></p>
+                                        <p><a class="button button-primary" href="/logout/">Uitloggen</a></p>
                                     </div>
                                 </li>
                             </ul>

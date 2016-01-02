@@ -116,23 +116,23 @@
 								  <div class="row">
 								    <div class="six columns">
 								    	<label for="userdetails-name">Naam</label>
-										<input class="u-full-width" type="text" placeholder="Uw naam" id="userdetails-name" name="meta_key[full_name]" value="<?php echo $userdata[12] ?>">
+										<input class="u-full-width" type="text" placeholder="Uw naam" id="userdetails-name" name="meta_key[full_name]" value="<?php echo $userdata[14] ?>">
 										<label for="userdetails-email">E-mail</label>
 										<input class="u-full-width" type="email" placeholder="Uw e-mail adres" id="userdetails-email" name="meta_key[company_name]" value="<?php echo $userdata['user_email'] ?>">
 										<label for="userdetails-phone">Telefoon</label>
-										<input class="u-full-width" type="tel" placeholder="Uw Telefoonnummer" id="userdetails-phone" name="meta_key[user_phone]" value="<?php echo $userdata[11] ?>">
+										<input class="u-full-width" type="tel" placeholder="Uw Telefoonnummer" id="userdetails-phone" name="meta_key[user_phone]" value="<?php echo $userdata[13] ?>">
 										<label for="userdetails-country">Land</label>
-										<input class="u-full-width" type="text" placeholder="Uw land" id="userdetails-country" name="meta_key[adress_country]" value="<?php echo $userdata[10] ?>">
+										<input class="u-full-width" type="text" placeholder="Uw land" id="userdetails-country" name="meta_key[adress_country]" value="<?php echo $userdata[12] ?>">
 								    </div>
 								    <div class="six columns">
-									    <label for="userdetails-adress-*">Bedrijf</label>
-										<input class="u-full-width" type="text" placeholder="Straatnaam 134" id="userdetails-adress-1" name="meta_key[adress_street]" value="<?php echo $userdata[13] ?>">
-									    <label for="userdetails-adress-*">Adres</label>
-										<input class="u-full-width" type="text" placeholder="Straatnaam 134" id="userdetails-adress-1" name="meta_key[adress_street]" value="<?php echo $userdata[7] ?>">
+									    <label for="userdetails-company">Bedrijf</label>
+										<input class="u-full-width" type="text" placeholder="Bedrijf" id="userdetails-company" name="meta_key[user_company]" value="<?php echo $userdata[15] ?>">
+									    <label for="userdetails-adress-1">Adres</label>
+										<input class="u-full-width" type="text" placeholder="Straatnaam 134" id="userdetails-adress-1" name="meta_key[adress_street]" value="<?php echo $userdata[9] ?>">
 								        <label for="userdetails-zip">Postcode</label>
-										<input class="u-full-width" type="text" placeholder="Postcode" id="userdetails-zip" name="meta_key[adress_zip]" value="<?php echo $userdata[8] ?>">
+										<input class="u-full-width" type="text" placeholder="Postcode" id="userdetails-zip" name="meta_key[adress_zip]" value="<?php echo $userdata[10] ?>">
 										<label for="userdetails-city">Plaats</label>
-										<input class="u-full-width" type="text" placeholder="Plaatsnaam" id="userdetails-city" name="meta_key[adress_city]" value="<?php echo $userdata[9] ?>">
+										<input class="u-full-width" type="text" placeholder="Plaatsnaam" id="userdetails-city" name="meta_key[adress_city]" value="<?php echo $userdata[11] ?>">
 								    </div>
 								  </div>
 								  <input class="button-primary" type="submit" value="Opslaan" name="userdatasubmit">

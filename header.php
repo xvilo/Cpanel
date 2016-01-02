@@ -37,6 +37,7 @@ include('functions.php');
     <meta name="theme-color" content="#ffffff">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <script src='https://www.google.com/recaptcha/api.js'></script>
+    <link rel="stylesheet" href="/css/intlTelInput.css">
 </head>
 
 <body>
@@ -51,14 +52,15 @@ include('functions.php');
                     <ul class="mainnav">
                         <li><a href="/invoice/">Mijn facturen</a></li>
                        <?php if (isset($_SESSION['user'])){ ?>
-                        <li><a href='/user/<?php echo $_SESSION['user_num'] ?>'><?php echo $_SESSION['user'] ?></a>
-                            <ul style="display: none;">
+                        <li class="has-sub"><a href='/user/<?php echo $_SESSION['user_num'] ?>'><?php echo $_SESSION['user'] ?></a>
+                            <ul>
                                 <li>
                                     <div class="navbar-login">
-                                        <p><strong><?php echo $_SESSION['user'] ?></strong></p>
+                                        <p>Klantnummer: <strong><?php echo $_SESSION['user_num'] ?></strong></p>
                                         <p class="small"><?php echo $_SESSION['user_email'] ?></p>
+                                        <Br>
                                         <p><a class="button button-primary" href="/user/">Mijn Account</a></p>
-                                        <p><a class="button button-primary" href="/logout.php">Uitloggen</a></p>
+                                        <p><a class="button button-primary" href="/logout/">Uitloggen</a></p>
                                     </div>
                                 </li>
                             </ul>

@@ -1,8 +1,7 @@
-
 $(function() {
-
-    if(Modernizr.history){
-
+	var enableIt = false;
+    //if(Modernizr.history){
+	if(enableIt){
     var newHash      = "",
         $mainContent = $("#main-content"),
         $pageWrap    = $("#page-wrap"),

@@ -7,7 +7,7 @@
 						<div class="element">
 							<h5>Wachtwoord vergeten</h5>
 							<form method="post">
-					              <label for="tokenInput">Stap 2: Vul je token in en nieuwe wachtwoord</label>
+					              <label for="tokenInput">Stap 2: Vul je token en nieuwe wachtwoord in</label>
 					              <input class="u-full-width" type="text" name="reset_token" placeholder="Token" id="tokenInput">
 					              <input class="u-full-width" type="password" name="reset_pass" placeholder="Wachtwoord" id="resetPassInput">
 						          <input class="button-primary" type="submit" value="Submit" name="loginforgotresetsubmit"><br>
@@ -15,7 +15,7 @@
 						</div>
 					</div>
 					<?php
-						}elseif(!isset($_GET['type'])){	
+						}elseif(!isset($_GET['type']) || !empty($loginsuccess)){	
 					?>
 					<div class="login-box">
 						<div class="element">
@@ -25,6 +25,15 @@
 										?>
 										<div class="notice error">
 											<p><span>Fout:</span> <?php echo $loginerror;?></p>
+										</div>
+										<?php
+									}
+									?>
+									<?php
+									if (!empty($loginsuccess)) {
+										?>
+										<div class="notice success">
+											<p><span></span> <?php echo $loginsuccess;?></p>
 										</div>
 										<?php
 									}

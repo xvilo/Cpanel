@@ -106,3 +106,32 @@ span.small {font-size: 0.8em;}
     width: 30%;
     text-align: right;
     margin-right: 20px;}
+    
+li.has-sub ul{
+	display: none;
+	margin: 0px;
+	position: absolute;
+}
+
+li.has-sub a{text-align: center;}
+
+li.has-sub ul li{
+	background: white;
+	padding: 1em;
+	border: 1px solid #EBEBEB;
+	list-style-type: none;
+}
+
+li.has-sub ul li p{
+	margin: 0px;
+}
+
+li.has-sub ul li .button{
+    width: 100%;
+    text-align: center;
+    line-height: 11px;
+}
+
+li.has-sub:hover ul{
+	display: block;
+}
