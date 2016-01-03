@@ -70,3 +70,21 @@ function calcLeftWrapper() {
 }
 
 jQuery("#userdetails-phone").intlTelInput();
+
+function prepareButton() {
+          	var count = 0;
+         $('#add').click(function() {
+           event.preventDefault();
+           var content = document.querySelector('#tempproduct').content;
+           // Update something in the template DOM.
+	       count++;
+	       console.log('products['+count+'][]');
+           console.log(content);
+           $(content).find('input').attr("name", 'products['+count+'][]');
+           document.querySelector('#products').appendChild(
+           document.importNode(content, true));
+    });
+}
+
+	console.log('yes');
+    prepareButton();

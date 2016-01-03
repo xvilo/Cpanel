@@ -135,3 +135,7 @@ li.has-sub ul li .button{
 li.has-sub:hover ul{
 	display: block;
 }
+
+input.product {
+    width: 100%;
+}

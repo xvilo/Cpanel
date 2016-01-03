@@ -95,6 +95,10 @@ function getInvoices($status=''){
 	return $sth->fetchAll();
 }
 
+function createInvoice($data){
+	die(var_dump($data));
+}
+
 function getFullInvoiceData($invoicenum=''){
 	global $dbh;
 	if($invoicenum == ''){
@@ -105,6 +109,14 @@ function getFullInvoiceData($invoicenum=''){
 	$sth->bindParam(':invoice_num', $invoicenum, PDO::PARAM_INT);
 	$sth->execute();
 	return $sth->fetch();
+}
+
+function getInvoiceStatus($status){
+	if($status == 0){
+		return "&nbsp;";
+	}elseif($status == 1){
+		return '<i class="fa fa-check payed"></i>';
+	}
 }
 
 if (!isset($_SESSION['user']) && $_SERVER['SCRIPT_NAME'] != '/login.php'){
@@ -119,10 +131,6 @@ if (isset($_POST['userdatasubmit'])) {
 	updateUser($_POST);
 }
 
-function getInvoiceStatus($status){
-	if($status == 0){
-		return "&nbsp;";
-	}elseif($status == 1){
-		return '<i class="fa fa-check payed"></i>';
-	}
+if (isset($_POST['invoicesubmit'])) {
+	createInvoice($_POST);
 }
