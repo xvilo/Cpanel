@@ -1,3 +1,6 @@
 [submodule "libs/PHPMailer"]
 	path = libs/PHPMailer
 	url = git@github.com:PHPMailer/PHPMailer.git
+[submodule "libs/mpdf"]
+	path = libs/mpdf
+	url = https://github.com/kartik-v/mpdf.git

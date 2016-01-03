@@ -86,22 +86,6 @@ function gen_uuid() {
     return sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),mt_rand( 0, 0xffff ),mt_rand( 0, 0x0fff ) | 0x4000,mt_rand( 0, 0x3fff ) | 0x8000, mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ));
 }
 
-if (isset($_POST['loginsubmit'])) {
-	if ($siteKey === '' || $secret === ''){
-		$loginerror = 'Config Error.';
-		return;
-	}elseif (isset($_POST['g-recaptcha-response'])){
-		$recaptcha = new \ReCaptcha\ReCaptcha($secret);
-		$resp = $recaptcha->verify($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
-		if ($resp->isSuccess()){
-			checkLogin($_POST['login_user'], $_POST['login_pass']);
-		}else{
-			$loginerror = 'Captcha incorrect.';
-			return;
-		}
-	}
-}
-
 function createNewPasswordLostToken(){
 	global $dbh;
 	$uuid = gen_uuid();
@@ -116,16 +100,6 @@ function createNewPasswordLostToken(){
 	$sth->bindParam(':user', $user_name, PDO::PARAM_STR);
 	$sth->execute();
 	$data = $sth->fetch();
-	
-	$mail_host = 'smtp-relay.gmail.com';
-	$mail_SMTPAuth = true;
-	$mail_Username = 'sem@thisisd3.com';
-	$mail_Password = 'Verti0Ndoos';
-	$mail_SMTPSecure = 'tls';
-	$mail_Port = 587;
-	$mail_setFrom_email = 'sem@thisisd3.com';
-	$mail_setFrom_name= 'sem schilder';
-	
 	
 	$mail = new PHPMailer;$mail->isSMTP();
 	$mail->Host = $mail_host;
@@ -236,6 +210,23 @@ function updateUser($userInfo){
 	    }else{
 	    }
     }
+}
+
+
+if (isset($_POST['loginsubmit'])) {
+	if ($siteKey === '' || $secret === ''){
+		$loginerror = 'Config Error.';
+		return;
+	}elseif (isset($_POST['g-recaptcha-response'])){
+		$recaptcha = new \ReCaptcha\ReCaptcha($secret);
+		$resp = $recaptcha->verify($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
+		if ($resp->isSuccess()){
+			checkLogin($_POST['login_user'], $_POST['login_pass']);
+		}else{
+			$loginerror = 'Captcha incorrect.';
+			return;
+		}
+	}
 }
 
 if (isset($_POST['loginforgotsubmit'])) {

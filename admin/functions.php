@@ -1,5 +1,5 @@
 <?php
-	include_once('../config.php')
+	include_once('../config.php');
 	
 	try {
 		$dbh = new PDO("mysql:host=localhost;dbname={$database}", $dbuser, $dbpass);

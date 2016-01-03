@@ -24,9 +24,9 @@
 				                        ?>
 			                        <tr>
 										<th><a class='invoice number' href='<?php echo $user['usercustnum'] ?>'><?php echo $user['usercustnum'] ?></a></th>
-										<th><a class='invoice name' href='<?php echo $user['usercustnum'] ?>'><?php echo $user[8] ?></a></th>
+										<th><a class='invoice name' href='<?php echo $user['usercustnum'] ?>'><?php echo $user[10] ?></a></th>
 										<th><a class='invoice email' href='mailto:<?php echo $user['user_email'] ?>'><?php echo $user['user_email'] ?></a></th>
-										<th><a class='invoice phone' href='tel:<?php echo $user[7] ?>'><?php echo $user[7] ?></a></th>
+										<th><a class='invoice phone' href='tel:<?php echo $user[9] ?>'><?php echo $user[9] ?></a></th>
 										<th><a class='invoice edit' href='<?php echo $user['usercustnum'] ?>'><i class="fa fa-pencil-square-o"></i></a></th>
 		                           	<tr>
 			                           	<?php
