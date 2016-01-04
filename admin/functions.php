@@ -16,7 +16,7 @@ function addUser(){
 
 function getAllUsersOption(){
 	global $dbh;
-	$sth = $dbh->prepare("SELECT ID, meta_key, meta_value FROM invoice_usermeta INNER JOIN invoice_users ON invoice_users.ID = invoice_usermeta.user_id WHERE meta_key='full_name';");
+	$sth = $dbh->prepare("SELECT * FROM invoice_usermeta INNER JOIN invoice_users ON invoice_users.ID = invoice_usermeta.user_id WHERE meta_key='full_name';");
 	$sth->execute();
 	return $sth->fetchAll();
 }
@@ -96,7 +96,15 @@ function getInvoices($status=''){
 }
 
 function createInvoice($data){
-	die(var_dump($data));
+	global $dbh;
+	
+	$userdata = getUserData($data['userid']);
+	$address = json_encode(array("address 1", "adress 2", "zip", "city", "Country"));
+	$products = json_encode($data['products']);
+	
+	$sth = $dbh->prepare("
+	INSERT INTO invoice_invoices (invoice_recipient, invoice_date, invoice_products, invoice_status, invoice_subtotal, invoice_tax, invoice_total, invoice_duedate, invoice_adress, invoice_number, invoice_ordernum) VALUES ('1', NOW(), ':invoice_products', '1', ':invoice_subtotal', ':invoice_tax', ':invoice_total', NOW() + INTERVAL 1 DAY, ':invoice_adress', '1', '1');");
+	
 }
 
 function getFullInvoiceData($invoicenum=''){

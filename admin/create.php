@@ -2,31 +2,31 @@
     <div id="main-content">
         <div id="guts">
 	        <template id="tempproduct">
-		        <!-- product begin -->
-				<div class="row">
-					<div class="six columns">
-						<input type="text" name="products[0][]" class="product product-title" placeholder="Titel">
-					</div>
-					<div class="three columns">
-						<input type="text" name="products[0][]" class="product" placeholder="Aantal">
-					</div>
-					<div class="three columns">
-						<input type="text" name="products[0][]" class="product" placeholder="Prijs per stuk">
-					</div>
-				</div>
-				<!-- product eind -->
-		     </template>
+		      <!-- product begin -->
+		      <div class="row">
+		        <div class="six columns">
+		          <input type="text" name="products[0][]" class="product product-title" placeholder="Titel">
+		        </div>
+		        <div class="three columns">
+		          <input type="text" name="products[0][]" class="product" placeholder="Aantal">
+		        </div>
+		        <div class="three columns">
+		          <input type="text" name="products[0][]" class="product" placeholder="Prijs per stuk">
+		        </div>
+		      </div>
+		      <!-- product eind -->
+		    </template>
             <div class="container">
                 <div class="row">
                     <div class="twelve columns">
                         <div class="element">
                             <h1>Create</h1>
-                            <form class="form" action="send.php" method="post">
-								<select id="user_select">
+                            <form class="form" method="post">
+								<select name='userid' id="user_select">
 									<option>Selecteer klant</option>
 									<?php
 										foreach (getAllUsersOption() as $user){
-											echo "<option name='userid' value='{$user['ID']}'>{$user['meta_value']}</option>";
+											echo "<option value='{$user['usercustnum']}'>{$user['meta_value']}</option>";
 										}
 									?>
 								</select>

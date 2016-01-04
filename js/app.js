@@ -1,3 +1,4 @@
+
 $(function() {
 	var enableIt = false;
     //if(Modernizr.history){
@@ -7,10 +8,10 @@ $(function() {
         $pageWrap    = $("#page-wrap"),
         baseHeight   = 0,
         $el;
-        
+
     $pageWrap.height($pageWrap.height());
     baseHeight = $pageWrap.height() - $mainContent.height();
-    
+
     $("ul.mainnav").delegate("a", "click", function() {
         _link = $(this).attr("href");
         history.pushState(null, null, _link);
@@ -34,7 +35,7 @@ $(function() {
                     });
                 });
     }
-    
+
     $(window).bind('popstate', function(){
        _link = location.pathname.replace(/^.*[\\\/]/, '');
        loadContent(_link);
@@ -42,7 +43,7 @@ $(function() {
 
 }
 
-    
+
 });
 
 $(document).ready(function() {
@@ -72,19 +73,17 @@ function calcLeftWrapper() {
 jQuery("#userdetails-phone").intlTelInput();
 
 function prepareButton() {
-          	var count = 0;
-         $('#add').click(function() {
-           event.preventDefault();
-           var content = document.querySelector('#tempproduct').content;
-           // Update something in the template DOM.
-	       count++;
-	       console.log('products['+count+'][]');
-           console.log(content);
-           $(content).find('input').attr("name", 'products['+count+'][]');
-           document.querySelector('#products').appendChild(
-           document.importNode(content, true));
+    var count = 0;
+    $('#add').click(function(event) {
+	    event.preventDefault();
+	    var content = document.querySelector('#tempproduct').content;
+		count++;
+		console.log('products['+count+'][]');
+	    console.log(content);
+	    var found = $($(content).children()[0]).find("input");
+		found.attr("name", 'products['+count+'][]');
+	    document.querySelector('#products').appendChild(
+	    document.importNode(content, true));
     });
 }
-
-	console.log('yes');
-    prepareButton();
+prepareButton();

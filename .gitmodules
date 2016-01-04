@@ -4,3 +4,6 @@
 [submodule "libs/mpdf"]
 	path = libs/mpdf
 	url = https://github.com/kartik-v/mpdf.git
+[submodule "libs/braintreepayments"]
+	path = libs/braintreepayments
+	url = https://github.com/braintree/braintree_php.git
