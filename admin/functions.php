@@ -97,14 +97,31 @@ function getInvoices($status=''){
 
 function createInvoice($data){
 	global $dbh;
-	
-	$userdata = getUserData($data['userid']);
-	$address = json_encode(array("address 1", "adress 2", "zip", "city", "Country"));
-	$products = json_encode($data['products']);
-	
+	$userdata       = getUserData($data['userid']);
+	$recipient      = $data['userid'];
+	$address        = json_encode(array($userdata[9], "", $userdata[10], $userdata[11], $userdata[12]));
+	$products       = json_encode($data['products']);
+	$subTotal       = 0;
+	$invoicedate    = date("Y-m-d H:i:s", strtotime($data['invoice_date']));
+	$invoiceduedate = date("Y-m-d H:i:s", strtotime('+14 days', strtotime($data['invoice_date'])));
+	foreach($data['products'] as $product) $subTotal += $product[2] * $product[1];
+	$tax        = 0.21 * $subTotal;
+	$grandTotal = $subTotal + $tax;
 	$sth = $dbh->prepare("
-	INSERT INTO invoice_invoices (invoice_recipient, invoice_date, invoice_products, invoice_status, invoice_subtotal, invoice_tax, invoice_total, invoice_duedate, invoice_adress, invoice_number, invoice_ordernum) VALUES ('1', NOW(), ':invoice_products', '1', ':invoice_subtotal', ':invoice_tax', ':invoice_total', NOW() + INTERVAL 1 DAY, ':invoice_adress', '1', '1');");
-	
+	INSERT INTO invoice_invoices (invoice_recipient, invoice_date, invoice_products, invoice_status, invoice_subtotal, invoice_tax, invoice_total, invoice_duedate, invoice_adress, invoice_number, invoice_ordernum) VALUES (:invoice_recipient, :invoice_date, :invoice_products, '0', :invoice_subtotal, :invoice_tax, :invoice_total, :invoice_duedate, :invoice_adress, :invoice_number, :invoice_ordernum);");
+	$sth->bindParam(':invoice_recipient', $recipient, PDO::PARAM_STR);
+	$sth->bindParam(':invoice_products', $products, PDO::PARAM_STR);
+	$sth->bindParam(':invoice_subtotal', $subTotal, PDO::PARAM_INT);
+	$sth->bindParam(':invoice_tax', $tax, PDO::PARAM_INT);
+	$sth->bindParam(':invoice_total', $grandTotal, PDO::PARAM_INT);
+	$sth->bindParam(':invoice_adress', $address, PDO::PARAM_STR);
+	$sth->bindParam(':invoice_date', $invoicedate, PDO::PARAM_STR);
+	$sth->bindParam(':invoice_duedate', $invoiceduedate, PDO::PARAM_STR);
+	$sth->bindParam(':invoice_number', $data['invoice_number'], PDO::PARAM_INT);
+	$sth->bindParam(':invoice_ordernum', $data['order_number'], PDO::PARAM_INT);
+	$sth->execute();
+	global $invoiceCreateOk;
+	$invoiceCreateOk= "Factuur is toegevoegd!";
 }
 
 function getFullInvoiceData($invoicenum=''){

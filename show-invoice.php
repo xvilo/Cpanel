@@ -13,7 +13,7 @@
                         </thead>
                         <tbody>
                         <?php
-                        foreach (getInvoices($_SESSION['user_id']) as $invoices){
+                        foreach (getInvoices($_SESSION['user_num']) as $invoices){
 	                        $totalAmount = number_format($invoices['invoice_total'], 2, ',', '.');
 	                        $invoiceStatus = getInvoiceStatus($invoices['invoice_status']);
 	                        echo "<tr>";
@@ -46,10 +46,7 @@
 								}else{
 									$invoiceData = getFullInvoiceData();
 								}
-							$invoice_adress = unserialize($invoiceData['invoice_adress']);
-							$productsData = unserialize($invoiceData['invoice_products']);
-							//die(var_dump($invoiceData));
-							if($invoiceData['invoice_recipient'] == $_SESSION['user_id']){
+							if($invoiceData['invoice_recipient'] == $_SESSION['user_num']){
 						?>
 							
                         <div class="element">
@@ -59,10 +56,7 @@
 									<h1>Factuur</h1>
 								</td>
 								<td class="resp" style="display:block;border: none;">
-									<p><?php echo $invoice_adress['Company'];?><br>
-									<?php echo $invoice_adress['Full Name'];?><br>
-									<?php echo $invoice_adress['Adress'];?> <?php echo $invoice_adress['AdressExtra'];?><br>
-									<?php echo $invoice_adress['Zipcode'];?> <?php echo $invoice_adress['City'];?></p>
+									<p><?php foreach (json_decode($invoiceData['invoice_adress']) as $adress) echo "$adress <br>" ?></p>
 								</td>
 								<td class="desc" style="display:block; margin-top: 50px; border: none;">
 									<p><b>Klantnummer:</b> <?php echo $_SESSION['user_num'] ?><br>
@@ -109,21 +103,21 @@
 							<tr style="clear:both;">
 								<td></td>
 							</tr>
-							<?php foreach($productsData as $product){
+							<?php foreach(json_decode($invoiceData['invoice_products']) as $product){
 								?>
 							<!-- Begin product -->
 							<tr style="width: 700px; float: left; margin-top:0px;">
 								<td style="width:363px; float:left; display:block;border: none;">
-									<?php echo $product['name'] ?>
+									<?php echo $product[0] ?>
 								</td>
 								<td style="width: 125px; float:left; display:block;border: none;">
-									&euro; <?php echo number_format($product['priceOne'], 2, ',', '.') ?>
+									&euro; <?php echo number_format($product[2], 2, ',', '.') ?>
 								</td>
 								<td style="width: 115px; float:left; display:block;border: none;">
-									<?php echo $product['amount'] ?>
+									<?php echo $product[1] ?>
 								</td>
 								<td style="width: 97px; float:left; display:block;border: none;">
-									&euro; <?php echo number_format($product['priceTot'], 2, ',', '.') ?>
+									&euro; <?php echo number_format($product[2] * $product[1], 2, ',', '.') ?>
 								</td>
 								<td style="clear: both; height: 0px; display: block;">&nbsp;</td>
 								<td style="display:block;"></td>

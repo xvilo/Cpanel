@@ -57,7 +57,7 @@ function getInvoices($userid){
 	global $dbh;
 	$check = false;
 	$sth = $dbh->prepare("SELECT invoice_id, invoice_status, invoice_number, invoice_duedate, invoice_total FROM invoice_invoices WHERE invoice_recipient=:userid;");
-	$sth->bindParam(':userid', $_SESSION['user_id'], PDO::PARAM_STR);
+	$sth->bindParam(':userid', $userid, PDO::PARAM_STR);
 	$sth->execute();
 	return $sth->fetchAll();
 }

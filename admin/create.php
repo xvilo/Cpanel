@@ -21,6 +21,24 @@
                     <div class="twelve columns">
                         <div class="element">
                             <h1>Create</h1>
+                            <?php
+									if (!empty($invoiceCreateFail)) {
+										?>
+										<div class="notice error">
+											<p><span>Fout:</span> <?php echo $invoiceCreateFail;?></p>
+										</div>
+										<?php
+									}
+									?>
+									<?php
+									if (!empty($invoiceCreateOk)) {
+										?>
+										<div class="notice success">
+											<p><span></span> <?php echo $invoiceCreateOk;?></p>
+										</div>
+										<?php
+									}
+									?>
                             <form class="form" method="post">
 								<select name='userid' id="user_select">
 									<option>Selecteer klant</option>
@@ -35,9 +53,9 @@
 				                    <label for="invoice-number">Factuur nummer:</label>
 									<input class="u-full-width" type="text" placeholder="Factuurnummer" id="invoice-number" name="invoice_number" value="<?php echo date('mdy0') ?>">
 									<label for="invoice-number">Factuur datum:</label>
-									<input class="u-full-width" type="date" placeholder="Factuurnummer" id="invoice-number" name="invoice_number" value="<?php echo date('Y-m-d') ?>">	
+									<input class="u-full-width" type="date" placeholder="Factuurnummer" id="invoice-number" name="invoice_date" value="<?php echo date('Y-m-d') ?>">	
 									<label for="invoice-number">Order nummer</label>
-									<input class="u-full-width" type="text" placeholder="Factuurnummer" id="invoice-number" name="invoice_number" value="<?php echo date('mdy0') ?>">	
+									<input class="u-full-width" type="text" placeholder="Factuurnummer" id="invoice-number" name="order_number" value="<?php echo date('mdy0') ?>">	
 									<button class="button-primary" name="invoicesubmit" type="Submit">Submit</button> <button type="button" class="button-primary" id="add">Add product</button>
 			                    </div>
 			                    <div id="products" class="eight columns product-group">
