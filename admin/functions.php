@@ -144,6 +144,10 @@ function getInvoiceStatus($status){
 	}
 }
 
+function emailInvoice($id){
+	
+}
+
 if (!isset($_SESSION['user']) && $_SERVER['SCRIPT_NAME'] != '/login.php'){
 	header("Location: {$domain}/login/?red=".urlencode($_SERVER['REQUEST_URI']));
 }

@@ -7,3 +7,6 @@
 [submodule "libs/braintreepayments"]
 	path = libs/braintreepayments
 	url = https://github.com/braintree/braintree_php.git
+[submodule "libs/sisow-php-wrapper"]
+	path = libs/sisow-php-wrapper
+	url = https://github.com/xvilo/Sisow-PHP-Wrapper.git
