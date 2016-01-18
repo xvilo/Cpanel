@@ -57,7 +57,7 @@
 							?>
 							<div class="element">
 								<h1>Error!</h1>
-								<p>403 no access.</p>
+								<p>403 no access. Selecteer links een van de facturen.</p>
 							</div>
 							<?php
 						}

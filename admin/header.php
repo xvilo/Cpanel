@@ -52,7 +52,7 @@ include('functions.php');
                         <li><a href="/admin/users/">Klanten</a></li>
                         <li><a href="/admin/invoices/">Facturen</a></li>
                        <?php if (isset($_SESSION['user'])){ ?>
-                        <li class="has-sub"><a href='/user/<?php echo $_SESSION['user_num'] ?>'><?php echo $_SESSION['user'] ?></a>
+                        <li class="has-sub"><a href='/user/<?php echo $_SESSION['user_num'] ?>'><?php echo $_SESSION['user'] ?><i class="fa fa-chevron-down"></i> </a>
                             <ul>
                                 <li>
                                     <div class="navbar-login">

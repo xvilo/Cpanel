@@ -7,7 +7,8 @@
 						<div class="element">
 							<h5>Wachtwoord vergeten</h5>
 							<form method="post">
-					              <label for="tokenInput">Stap 2: Vul je token en nieuwe wachtwoord in</label>
+								  <label for="emailHelp">Stap 2: Check je e-mail. Hier ontvangt u de token</label>
+					              <label for="tokenInput">Stap 3: Vul je token en nieuwe wachtwoord in</label>
 					              <input class="u-full-width" type="text" name="reset_token" placeholder="Token" id="tokenInput">
 					              <input class="u-full-width" type="password" name="reset_pass" placeholder="Wachtwoord" id="resetPassInput">
 						          <input class="button-primary" type="submit" value="Submit" name="loginforgotresetsubmit"><br>
