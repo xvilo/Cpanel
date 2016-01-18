@@ -88,6 +88,14 @@ function gen_uuid() {
 
 function createNewPasswordLostToken(){
 	global $dbh;
+	global $mail_host;
+	global $mail_SMTPAuth;
+	global $mail_Username;
+	global $mail_Password;
+	global $mail_SMTPSecure;
+	global $mail_Port;
+	global $mail_setFrom_email;
+	global $mail_setFrom_name;
 	$uuid = gen_uuid();
 	$user_name = $_POST['reset_user'];
 	

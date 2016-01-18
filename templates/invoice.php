@@ -1,3 +1,10 @@
+<?php
+//some extra logic
+$date = explode(" ",$invoiceData['invoice_duedate']);
+$dueDate = $date[0];
+$date = explode(" ",$invoiceData['invoice_date']);
+$invoiceDate = $date[0];
+?>
 <table id="invoice-table" align="center" border="0" cellpadding="0" cellspacing="0" width="700">
 							<tr style="width: 350px; float: left;">
 								<td style="display:block;border: none;">
@@ -9,7 +16,7 @@
 								<td class="desc" style="display:block; margin-top: 50px; border: none;">
 									<p><b>Klantnummer:</b> <?php echo $_SESSION['user_num'] ?><br>
 									<b>Factuurnummer:</b> <?php echo $invoiceData['invoice_number'] ?><br>
-									<b>Factuurdatum:</b> <?php echo $invoiceData['invoice_date'] ?><br>
+									<b>Factuurdatum:</b> <?php echo $invoiceDate; ?><br>
 									<b>Ordernummer:</b> <?php echo $invoiceData['invoice_ordernum'] ?></p>
 								</td>
 							</tr>
@@ -93,7 +100,7 @@
 								<td>
 									<p style="margin-top:60px;"><b>Betaling factuur</b><br>
 									Is deze factuur nog niet betaald, dan zien we de betaling graag voor
-									16-12-2015 tegemoet op IBAN / rekening <b><i>NL33 ABNA 0448 1553 89</i></b>
+									<?php echo $dueDate ?> tegemoet op IBAN / rekening <b><i>NL33 ABNA 0448 1553 89</i></b>
 									ten name van <b><i>Sem Schilder</i></b> onder vermelding van het kenmerk
 									<b><i>0405150/0212150</i></b></p>
 								</td>

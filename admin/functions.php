@@ -82,15 +82,18 @@ function getUserData($custnum){
 	return $sth->fetch();
 }
 
-function getInvoices($status=''){
+function getInvoices($status='', $userid=''){
 	global $dbh;
 	$check = false;
-	if($status != ''){
-		$sth = $dbh->prepare("SELECT * FROM invoice_invoices WHERE invoice_status=:status");
+	if($userid != ''){
+		$sth = $dbh->prepare("SELECT * FROM invoice_invoices WHERE invoice_recipient=:uid ORDER BY invoice_date DESC");
+		$sth->bindParam(':uid', $userid, PDO::PARAM_STR);
+	}elseif($status != ''){
+		$sth = $dbh->prepare("SELECT * FROM invoice_invoices WHERE invoice_status=:status ORDER BY invoice_date DESC");
+		$sth->bindParam(':status', $status, PDO::PARAM_INT);
 	}else{
-		$sth = $dbh->prepare("SELECT * FROM invoice_invoices");
+		$sth = $dbh->prepare("SELECT * FROM invoice_invoices ORDER BY invoice_date DESC");
 	}
-	$sth->bindParam(':status', $status, PDO::PARAM_INT);
 	$sth->execute();
 	return $sth->fetchAll();
 }
@@ -99,7 +102,7 @@ function createInvoice($data){
 	global $dbh;
 	$userdata       = getUserData($data['userid']);
 	$recipient      = $data['userid'];
-	$address        = json_encode(array($userdata[9], "", $userdata[10], $userdata[11], $userdata[12]));
+	$address        = json_encode(array($userdata[15], $userdata[14], $userdata[9], "{$userdata[10]} {$userdata[11]}", $userdata[12]));
 	$products       = json_encode($data['products']);
 	$subTotal       = 0;
 	$invoicedate    = date("Y-m-d H:i:s", strtotime($data['invoice_date']));
