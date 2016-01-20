@@ -80,11 +80,9 @@
 			                    <h5>Details factuur: <i><?php echo $_GET['id'] ?></i></h5>
 			                    <p>Een rij factuur opties</p>
 		                    </div>
-				                <?php 
-								$invoiceData = getFullInvoiceData($_GET['id']); ?>
-									
-		                        <div class="element">
-								<?php include('../templates/invoice.php') ?>
+		                    <div class="element">
+				                <?php
+					                echo showInvoice($_GET['id'])?>
 							</div>
 	                    </div>
 	                </div>

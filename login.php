@@ -44,7 +44,7 @@
 					              <label for="exampleEmailInput">Wachtwoord</label>
 					              <input class="u-full-width" type="password" name="login_pass" placeholder="Wachtwoord" id="exampleEmailInput">
 					              <label for="Captcha">Bent u een robot?</label>
-					              <div class="g-recaptcha" data-sitekey="6Lc5JRQTAAAAAFc5UvrC-MTKiVYHNhQWIq7OzuDC"></div>
+					              <div class="g-recaptcha" data-sitekey="<?php echo $config['recaptcha']['sitekey'] ?>"></div>
 						          <input class="button-primary" type="submit" value="Submit" name="loginsubmit"><br>
 						          <a href="/login/?type=forgot">Wachtwoord vergeten</a>
         					</form>

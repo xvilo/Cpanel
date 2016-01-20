@@ -3,7 +3,7 @@
 	require_once('libs/PHPMailer/PHPMailerAutoload.php');
 	require_once('config.php');
 	try {
-		$dbh = new PDO("mysql:host=localhost;dbname={$database}", $dbuser, $dbpass);
+		$dbh = new PDO("mysql:host=localhost;dbname={$config['general']['database']}", $config['general']['dbuser'], $config['general']['dbpass']);
 	} catch (PDOException $e) {
 	    print "Error: " . $e->getMessage() . "<br/>";
 	    die();
@@ -220,13 +220,21 @@ function updateUser($userInfo){
     }
 }
 
+function showInvoice($id=''){
+	$invoiceData = getFullInvoiceData($id);
+	ob_start();
+	include('../templates/invoice.php');
+	$contents = ob_get_contents();
+	ob_end_clean();
+	return $contents;
+}
 
 if (isset($_POST['loginsubmit'])) {
-	if ($siteKey === '' || $secret === ''){
+	if ($config['recaptcha']['sitekey'] === '' || $config['recaptcha']['secret'] === ''){
 		$loginerror = 'Config Error.';
 		return;
 	}elseif (isset($_POST['g-recaptcha-response'])){
-		$recaptcha = new \ReCaptcha\ReCaptcha($secret);
+		$recaptcha = new \ReCaptcha\ReCaptcha($config['recaptcha']['secret']);
 		$resp = $recaptcha->verify($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
 		if ($resp->isSuccess()){
 			checkLogin($_POST['login_user'], $_POST['login_pass']);

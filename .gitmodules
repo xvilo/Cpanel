@@ -10,3 +10,6 @@
 [submodule "libs/sisow-php-wrapper"]
 	path = libs/sisow-php-wrapper
 	url = https://github.com/xvilo/Sisow-PHP-Wrapper.git
+[submodule "libs/twilio"]
+	path = libs/twilio
+	url = git@github.com:twilio/twilio-php.git

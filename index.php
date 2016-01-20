@@ -42,15 +42,17 @@
                         
                         <?php 
 								if(isset($_GET['no'])){
+									$invoice = showInvoice($_GET['no']);
 									$invoiceData = getFullInvoiceData($_GET['no']);
 								}else{
+									$invoice = showInvoice();
 									$invoiceData = getFullInvoiceData();
 								}
 							if($invoiceData['invoice_recipient'] == $_SESSION['user_num']){
+								echo $invoice;
 						?>
 							
-                        <div class="element">
-						<?php include('templates/invoice.php') ?>
+                        
 					</div>
 					<?php
 						}else{

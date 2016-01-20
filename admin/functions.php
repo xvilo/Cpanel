@@ -1,8 +1,9 @@
 <?php
 	include_once('../config.php');
+	require_once('../libs/PHPMailer/PHPMailerAutoload.php');
 	
 	try {
-		$dbh = new PDO("mysql:host=localhost;dbname={$database}", $dbuser, $dbpass);
+		$dbh = new PDO("mysql:host=localhost;dbname={$config['general']['database']}", $config['general']['dbuser'], $config['general']['dbpass']);
 	} catch (PDOException $e) {
 	    print "Error: " . $e->getMessage() . "<br/>";
 	    die();
@@ -123,8 +124,9 @@ function createInvoice($data){
 	$sth->bindParam(':invoice_number', $data['invoice_number'], PDO::PARAM_INT);
 	$sth->bindParam(':invoice_ordernum', $data['order_number'], PDO::PARAM_INT);
 	$sth->execute();
+	sendMail($userdata['user_email'], "Uw Factuur van D3 Creative Agency" ,"Beste {$userdata[14]},<br/><br/><div>In je account <strong>{$userdata['user_login']}</strong> is een nieuwe factuur voor je aangemaakt met factuurnummer {$data['invoice_number']}. We hebben de factuur ook onderaan dit bericht toegevoegd.<br/><br/>Je hebt aangegeven gebruik te willen maken van overboeking. Let er op dat de factuur op tijd word betaald op om pauzering van je diensten te voorkomen.<br/><br/>Voor eventuele vragen kan je ons altijd bereiken via <a href=\"mailto:sem@thisisd3.com\">sem@thisisd3.com</a> of via de knop 'Contact' in je <a href=\"http://cp.thisisd3.com/contact/\">controlepaneel</a>.<br/></div><p>Met vriendelijke groet,<br/><br />D3 - Creative Agency<br /></p><br><br><hr><br><br>".showInvoice($data['invoice_number']));
 	global $invoiceCreateOk;
-	$invoiceCreateOk= "Factuur is toegevoegd!";
+	$invoiceCreateOk= "Factuur is toegevoegd! En ge-e-mailed naar <i>{$userdata['user_email']}</i>";
 }
 
 function getFullInvoiceData($invoicenum=''){
@@ -146,10 +148,41 @@ function getInvoiceStatus($status){
 		return '<i class="fa fa-check payed"></i>';
 	}
 }
-
-function emailInvoice($id){
-	
+function showInvoice($id){
+	$invoiceData = getFullInvoiceData($id);
+	ob_start();
+	include('../templates/invoice.php');
+	$contents = ob_get_contents();
+	ob_end_clean();
+	return $contents;
 }
+
+function sendMail($recipient, $subject, $data){
+	global $dbh;
+	global $config;
+	
+	$mail = new PHPMailer;
+	$mail->isSMTP();
+	$mail->Host = $config['email']['smtphost'];
+	$mail->SMTPAuth = $config['email']['smtpauth'];
+	$mail->Username = $config['email']['smtpuser'];
+	$mail->Password = $config['email']['smtppass'];
+	$mail->SMTPSecure = $config['email']['smtpsec'];
+	$mail->Port = $config['email']['smtpport'];
+	
+	$mail->setFrom($config['email']['from'], $config['email']['fromName']);
+	$mail->addAddress($recipient);
+	$mail->Subject = $subject;
+	$mail->Body    = $data;
+	$mail->IsHTML(true); 
+	if(!$mail->send()) {
+		echo 'Message could not be sent.<br>';
+	    echo 'Mailer Error: <pre>'.$mail->ErrorInfo.'</pre>';
+	    die();
+	}
+	return true;
+}
+
 
 if (!isset($_SESSION['user']) && $_SERVER['SCRIPT_NAME'] != '/login.php'){
 	header("Location: {$domain}/login/?red=".urlencode($_SERVER['REQUEST_URI']));
