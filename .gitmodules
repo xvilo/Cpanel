@@ -13,3 +13,6 @@
 [submodule "libs/twilio"]
 	path = libs/twilio
 	url = git@github.com:twilio/twilio-php.git
+[submodule "libs/mollie-api-php"]
+	path = libs/mollie-api-php
+	url = git@github.com:mollie/mollie-api-php.git
