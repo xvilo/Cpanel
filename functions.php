@@ -1,6 +1,7 @@
 <?php
 	require_once('libs/autoload.php');
 	require_once('libs/PHPMailer/PHPMailerAutoload.php');
+	require_once('libs/stripe/init.php');
 	require_once('config.php');
 	try {
 		$dbh = new PDO("mysql:host=localhost;dbname={$config['general']['database']}", $config['general']['dbuser'], $config['general']['dbpass']);
@@ -51,6 +52,15 @@ function doLoginQuery($username, $password){
 		header("Location: {$domain}{$_GET['red']}");
 	}
 
+}
+
+function setInvoicePaid($id){
+	global $dbh;
+	global $config;
+	$sth = $dbh->prepare("UPDATE invoice_invoices SET invoice_status='1' WHERE invoice_number=:invoicenum;");
+	$sth->bindParam(':invoicenum', $id, PDO::PARAM_STR);
+	$sth->execute();
+	return $sth->fetchAll();
 }
 
 function getInvoices($userid){
@@ -231,6 +241,26 @@ function sendMail($recipient, $subject, $data){
 	return true;
 }
 
+function DoPayment($token, $invoice){
+	global $dbh;
+	global $config;
+	\Stripe\Stripe::setApiKey($config['stripe']['apiKey']);
+	$invoiceData = getFullInvoiceData($invoice);
+	$amount = number_format($invoiceData['invoice_total'], 2, '', '');
+	try {
+	  $charge = \Stripe\Charge::create(array(
+	    "amount" => $amount,
+	    "currency" => "eur",
+	    "source" => $token,
+	    "description" => "Betaling factuur #{$invoice}"
+	    ));
+	    setInvoicePaid($invoice);
+	    return true;
+	} catch(\Stripe\Error\Card $e) {
+		die($e->jsonBody['error']['message']);
+	}
+}
+
 if (isset($_POST['loginsubmit'])) {
 	if ($config['recaptcha']['sitekey'] === '' || $config['recaptcha']['secret'] === ''){
 		$loginerror = 'Config Error.';
@@ -253,10 +283,17 @@ if (isset($_POST['loginforgotsubmit'])) {
 
 if (isset($_POST['loginforgotresetsubmit'])) {
 	$loginsuccess = doPasswordReset();
-}
+} 
+
+if (isset($_POST['stripeToken'])) {
+	doPayment($_POST['stripeToken'],$_POST['payinvoicenum']);
+	header("Location: {$domain}/invoice/".urlencode($_POST['payinvoicenum']));
+	exit();
+} 
 
 if (!isset($_SESSION['user']) && $_SERVER['SCRIPT_NAME'] != '/login.php'){
 	header("Location: {$domain}/login/?red=".urlencode($_SERVER['REQUEST_URI']));
+	exit();
 }
 
 if (isset($_POST['userdatasubmit'])) {

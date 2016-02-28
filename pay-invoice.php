@@ -34,14 +34,6 @@
                         <p>&nbsp;</p>
                     </div>
                     <div class="eight columns">
-	                    <?php
-								if(isset($_GET['no'])){
-									$invoiceData = getFullInvoiceData($_GET['no']);
-								}else{
-									$invoiceData = getFullInvoiceData();
-								}
-							if($invoiceData['invoice_recipient'] == $_SESSION['user_num']){
-						?>
                         <div class="element">
                             <h1>Mijn Facturen</h1>
 
@@ -55,39 +47,17 @@
                           </ul>
                         </div>
 
+                        <?php
+								if(isset($_GET['no'])){
+									$invoiceData = getFullInvoiceData($_GET['no']);
+								}else{
+									$invoiceData = getFullInvoiceData();
+								}
+							if($invoiceData['invoice_recipient'] == $_SESSION['user_num']){
+						?>
+
                         <div class="element">
 						<?php include('templates/invoice.php') ?>
-                        </div>
-                        <div class="element">
-                        	  <form method="POST" id="payment-form">
-							    <span class="payment-errors"></span>
-							
-							    <div class="form-row">
-							      <label>
-							        <span>Card Number</span>
-							        <input type="text" size="20" data-stripe="number"/>
-							      </label>
-							    </div>
-							
-							    <div class="form-row">
-							      <label>
-							        <span>CVC</span>
-							        <input type="text" size="4" data-stripe="cvc"/>
-							      </label>
-							    </div>
-							
-							    <div class="form-row">
-							      <label>
-							        <span>Expiration (MM/YYYY)</span>
-							        <input type="text" size="2" data-stripe="exp-month"/>
-							      </label>
-							      <span> / </span>
-							      <input type="text" size="4" data-stripe="exp-year"/>
-							    </div>
-								<input type="text" size="20" name="payinvoicenum" value="<?php echo $invoiceData['invoice_number'] ?>" hidden/>
-							    <button type="submit">Submit Payment</button>
-							  </form>
-                        </div>
 					</div>
 					<?php
 						}else{

@@ -14,7 +14,7 @@ $invoiceDate = $date[0];
 									<p><?php foreach (json_decode($invoiceData['invoice_adress']) as $adress) echo "$adress <br>" ?></p>
 								</td>
 								<td class="desc" style="display:block; margin-top: 50px; border: none;">
-									<p><b>Klantnummer:</b> <?php echo $_SESSION['user_num'] ?><br>
+									<p><b>Klantnummer:</b> <?php echo $invoiceData['invoice_recipient'] ?><br>
 									<b>Factuurnummer:</b> <?php echo $invoiceData['invoice_number'] ?><br>
 									<b>Factuurdatum:</b> <?php echo $invoiceDate; ?><br>
 									<b>Ordernummer:</b> <?php echo $invoiceData['invoice_ordernum'] ?></p>
@@ -78,7 +78,7 @@ $invoiceDate = $date[0];
 								<td style="display:block;"></td>
 							</tr>
 							<!-- end product -->
-							<?php	
+							<?php
 							}
 							?>
 							<tr>
@@ -100,9 +100,9 @@ $invoiceDate = $date[0];
 								<td>
 									<p style="margin-top:60px;"><b>Betaling factuur</b><br>
 									Is deze factuur nog niet betaald, dan zien we de betaling graag voor
-									<?php echo $dueDate ?> tegemoet op IBAN / rekening <b><i>NL33 ABNA 0448 1553 89</i></b>
-									ten name van <b><i>Sem Schilder</i></b> onder vermelding van het kenmerk
-									<b><i>0405150/0212150</i></b></p>
+									<?php echo $dueDate ?> tegemoet op IBAN / rekening <b><i>NL47 ABNA 0518 2345 33</i></b>
+									ten name van <b><i>D3 CREATIVE AGENCY</i></b> onder vermelding van het kenmerk
+									<b><i><?php echo $invoiceData['invoice_recipient'] ?>/<?php echo $invoiceData['invoice_number'] ?></i></b></p>
 								</td>
 							</tr>
 						</table>

@@ -16,3 +16,6 @@
 [submodule "libs/mollie-api-php"]
 	path = libs/mollie-api-php
 	url = git@github.com:mollie/mollie-api-php.git
+[submodule "libs/stripe"]
+	path = libs/stripe
+	url = git@github.com:stripe/stripe-php.git
