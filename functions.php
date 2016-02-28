@@ -8,7 +8,7 @@
 	    print "Error: " . $e->getMessage() . "<br/>";
 	    die();
 	}
-	
+
 session_start();
 
 function checkPassword($password, $hash){
@@ -35,7 +35,7 @@ function doLoginQuery($username, $password){
 	$sth = $dbh->prepare("SELECT * FROM invoice_users WHERE user_login=:username;");
 	$sth->bindParam(':username', $username, PDO::PARAM_STR);
 	$sth->execute();
-		
+
 	foreach($sth as $row) {
     	$check = checkPassword($_POST['login_pass'], $row['user_pass']);
     	$info = $row;
@@ -88,53 +88,29 @@ function gen_uuid() {
 
 function createNewPasswordLostToken(){
 	global $dbh;
-	global $mail_host;
-	global $mail_SMTPAuth;
-	global $mail_Username;
-	global $mail_Password;
-	global $mail_SMTPSecure;
-	global $mail_Port;
-	global $mail_setFrom_email;
-	global $mail_setFrom_name;
+	global $config;
 	$uuid = gen_uuid();
 	$user_name = $_POST['reset_user'];
-	
+
 	$sth = $dbh->prepare("UPDATE `invoice_users` SET user_password_reset_token=:token, user_password_reset_date=NOW() WHERE user_login=:user;");
 	$sth->bindParam(':token', $uuid, PDO::PARAM_STR);
 	$sth->bindParam(':user', $user_name, PDO::PARAM_STR);
 	$sth->execute();
-	
+
 	$sth = $dbh->prepare("SELECT user_email FROM `invoice_users` WHERE user_login=:user;");
 	$sth->bindParam(':user', $user_name, PDO::PARAM_STR);
 	$sth->execute();
 	$data = $sth->fetch();
-	
-	$mail = new PHPMailer;$mail->isSMTP();
-	$mail->Host = $mail_host;
-	$mail->SMTPAuth = $mail_SMTPAuth;
-	$mail->Username = $mail_Username;
-	$mail->Password = $mail_Password;
-	$mail->SMTPSecure = $mail_SMTPSecure;
-	$mail->Port = $mail_Port;
-	
-	$mail->setFrom($mail_setFrom_email, $mail_setFrom_name);
-	$mail->addAddress($data['user_email']);
-	$mail->Subject = 'Wachtwoord reset D3 Control Panel';
-	$mail->Body    = "Hallo,
-	
-Je hebt een wachtwoord reset aangevraagd. Je reset token is: '$uuid' (zonder ''). 
-Vul deze in bij het invul veld en vervolgens voer je je nieuwe wachtwoord in.<br> 
-
-Heb je de pagina niet meer open staan? Vraag dan opnieuw een wachtwoord aan, je ontvangt dan een nieuwe token. Deze is dan niet meer bruikbaar.
-LET OP: Je code is 24 uur geldig.
-
-Groet,
-Sem";
-	if(!$mail->send()) {
-		echo 'Message could not be sent.<br>';
-	    echo 'Mailer Error: ' . $mail->ErrorInfo;
-	    die();
-	}
+	sendMail($data['user_email'], 'Wachtwoord reset D3 Control Panel', "Hallo,<br />
+<br />
+Je hebt een wachtwoord reset aangevraagd. Je reset token is: '$uuid' (zonder '').<br />
+Vul deze in bij het invul veld en vervolgens voer je je nieuwe wachtwoord in.<br>
+<br />
+Heb je de pagina niet meer open staan? Vraag dan opnieuw een wachtwoord aan, je ontvangt dan een nieuwe token. Deze is dan niet meer bruikbaar.<br />
+<b>LET OP: Je code is 24 uur geldig.</b><br />
+<br />
+Groet,<br />
+Sem");
 	return true;
 }
 
@@ -142,7 +118,7 @@ function doPasswordReset(){
 	global $dbh;
 	$uuid = $_POST['reset_token'];
 	$password = password_hash($_POST['reset_pass'], PASSWORD_BCRYPT, array("cost" => 10));;
-	
+
 	$sth = $dbh->prepare("SELECT * FROM `invoice_users` WHERE `user_password_reset_token`=:token;");
 	$sth->bindParam(':token', $uuid, PDO::PARAM_STR);
 	$sth->execute();
@@ -151,18 +127,18 @@ function doPasswordReset(){
 		die('Er is iets fout gegaan. Check of de token juist is.');
 	}
 	$data = $sth->fetch();
-	
+
 	/* To Do, a 24 hour check
 	if(time() - $data['user_password_reset_date'] >! 60*60*24){
 		die('Deze token ('.$uuid.') is niet meer geldig. Vraag een nieuwe aan.');
 	}
 	*/
-	
+
 	$sth = $dbh->prepare("UPDATE `invoice_users` SET user_pass=:password, user_password_reset_token='' WHERE user_password_reset_token=:token;");
 	$sth->bindParam(':token', $uuid, PDO::PARAM_STR);
 	$sth->bindParam(':password', $password, PDO::PARAM_STR);
 	$sth->execute();
-	
+
 	return 'Je wachtwoord is met success veranderd!';
 }
 
@@ -172,25 +148,25 @@ function getUserData($custnum){
 	SELECT u.*, m1.meta_value, m2.meta_value, m3.meta_value, m4.meta_value, m5.meta_value, m6.meta_value, m7.meta_value
 	FROM invoice_users u
 	LEFT OUTER JOIN invoice_usermeta m1
-	    on u.id = m1.user_id 
+	    on u.id = m1.user_id
 	    and m1.meta_key='adress_street'
 	LEFT OUTER JOIN invoice_usermeta m2
-	    on u.id = m2.user_id 
+	    on u.id = m2.user_id
 	    and m2.meta_key='adress_zip'
 	LEFT OUTER JOIN invoice_usermeta m3
-	    on u.id = m3.user_id 
+	    on u.id = m3.user_id
 	    and m3.meta_key='adress_city'
 	LEFT OUTER JOIN invoice_usermeta m4
-	    on u.id = m4.user_id 
+	    on u.id = m4.user_id
 	    and m4.meta_key='adress_country'
 	LEFT OUTER JOIN invoice_usermeta m5
-	    on u.id = m5.user_id 
+	    on u.id = m5.user_id
 	    and m5.meta_key='user_phone'
 	LEFT OUTER JOIN invoice_usermeta m6
-	    on u.id = m6.user_id 
+	    on u.id = m6.user_id
 	    and m6.meta_key='full_name'
 	LEFT OUTER JOIN invoice_usermeta m7
-	    on u.id = m7.user_id 
+	    on u.id = m7.user_id
 	    and m7.meta_key='user_company'
 	WHERE usercustnum=:customer");
 	$sth->bindParam(':customer', $custnum, PDO::PARAM_INT);
@@ -227,6 +203,32 @@ function showInvoice($id=''){
 	$contents = ob_get_contents();
 	ob_end_clean();
 	return $contents;
+}
+
+function sendMail($recipient, $subject, $data){
+	global $dbh;
+	global $config;
+
+	$mail = new PHPMailer;
+	$mail->isSMTP();
+	$mail->Host = $config['email']['smtphost'];
+	$mail->SMTPAuth = $config['email']['smtpauth'];
+	$mail->Username = $config['email']['smtpuser'];
+	$mail->Password = $config['email']['smtppass'];
+	$mail->SMTPSecure = $config['email']['smtpsec'];
+	$mail->Port = $config['email']['smtpport'];
+
+	$mail->setFrom($config['email']['from'], $config['email']['fromName']);
+	$mail->addAddress($recipient);
+	$mail->Subject = $subject;
+	$mail->Body    = $data;
+	$mail->IsHTML(true);
+	if(!$mail->send()) {
+		echo 'Message could not be sent.<br>';
+	    echo 'Mailer Error: <pre>'.$mail->ErrorInfo.'</pre>';
+	    die();
+	}
+	return true;
 }
 
 if (isset($_POST['loginsubmit'])) {
