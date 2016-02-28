@@ -1,15 +1,33 @@
 <?php
-	$database = "xxxxxxxxx";
-	$dbuser   = "xxxxxxxxx";
-	$dbpass   = "xxxxxxxxx";
-	$domain   = "http://xxxxxxxxx.com";
-    $secret = "xxxxxxxxx-xxxxxxxxx";
-    $siteKey  = "xxxxxxxxx-xxxxxxxxx";
-    $mail_host = 'xxxxxxxxx.com';
-	$mail_SMTPAuth = true;
-	$mail_Username = 'xxxxxxxxx';
-	$mail_Password = 'xxxxxxxxx';
-	$mail_SMTPSecure = 'tls';
-	$mail_Port = 587;
-	$mail_setFrom_email = 'xxxxxxxxx';
-	$mail_setFrom_name= 'xxxxxxxxx';
+	//config
+	$config = array(
+		'general'=>array(
+			'database' => '********',
+			'dbuser' => '********',
+			'dbpass' => '********',
+			'domain'  => 'http://domain.com',
+		),
+		'email'=>array(
+			'from' => 'email@domain.com',
+			'fromName' => 'Your name',
+			'smtphost' => 'smtp-relay.gmail.com',
+			'smtpauth' => true,
+			'smtpuser' => 'email@domain.com',
+			'smtppass' => '*********',
+			'smtpsec' => 'tls',
+			'smtpport' => 587,
+		),
+
+		'twilio'=>array(
+			'enable' => false,
+			'sid' => '********************************',
+			'authtoken' => '********************************',
+			'number' => 'xxx-xxx-xxxx',
+		),
+
+		'recaptcha'=>array(
+			'secret' => "************************-********",
+			'sitekey' => '************************-****************',
+		)
+	);
+?>
