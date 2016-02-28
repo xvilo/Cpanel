@@ -5,5 +5,5 @@ include('functions.php');
     session_write_close();
     setcookie(session_name(),'',0,'/');
     session_regenerate_id(true);
-    header("Location: {$domain}");
+    header("Location: {$config['general']['domain']}");
 ?>
